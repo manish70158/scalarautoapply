@@ -129,7 +129,11 @@ async function clickWithRetry(page: Page, locator: Locator, attempts = 3) {
   }
 
   // 4) Click submit/accept/confirm button in modal
-  let confirmBtn = page.getByRole('button', { name: /accept|submit|confirm/i });
+  let confirmBtn = page.locator('div.chr-open-request-accept-modal__book-slot-btn[ng-click="submitChrAcceptOpenPoolModal()"]');
+  if (await confirmBtn.count() === 0) {
+    // Fallback to generic selector
+    confirmBtn = page.getByRole('button', { name: /accept|submit|confirm/i });
+  }
   if (await confirmBtn.count() > 0) {
     await confirmBtn.first().click();
     console.log('[auth] Clicked final Accept/Submit/Confirm');

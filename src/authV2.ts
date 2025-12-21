@@ -59,13 +59,21 @@ async function clickWithRetry(page: Page, locator: Locator, attempts = 3) {
   let acceptBtn: Locator | undefined;
   let buttonFound = false;
   const maxAttempts = 600000; // Check for up to 60 attempts
-  const waitBetweenAttempts = 30000; // 50 seconds between checks
+  const waitBetweenAttempts = 60000; // 50 seconds between checks
   
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     console.log(`[auth] Attempt ${attempt}/${maxAttempts}: Checking for accept button...`);
     
     // Reload the page to get fresh data
-    await page.reload({ waitUntil: 'networkidle' });
+    try {
+    await page.keyboard.down('Shift');
+    await page.reload({ waitUntil: 'networkidle', timeout: 30000 });
+    await page.keyboard.up('Shift');
+    } catch (e) {
+    console.log('[auth] ⚠️  Page reload failed (server may be down), retrying...');
+    await page.waitForTimeout(waitBetweenAttempts);
+    continue;
+    }
     
     // Click Open Pool tab again after reload
     if (await openPoolTab.isVisible().catch(() => false)) {

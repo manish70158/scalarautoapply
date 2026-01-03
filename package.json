@@ -9,6 +9,7 @@
     "auth": "ts-node src/auth.ts",
     "authv2": "ts-node src/authV2.ts",
     "authv3": "ts-node src/authV3.ts",
+    "authv4": "ts-node src/authV4.ts",
     "start": "node dist/index.js"
   },
   "dependencies": {

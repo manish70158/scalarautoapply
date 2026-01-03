@@ -86,3 +86,7 @@ After `npm run build`, add to your crontab:
 
 
 pkill -9 "Google Chrome" && sleep 3 && /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-debug-profile &
+
+
+//////////////////
+killall "Google Chrome" && sleep 2 && /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-debug-profile &
